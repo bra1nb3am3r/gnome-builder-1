@@ -1,0 +1,8 @@
+# Ideally we want many of these to be defined in the plugin dir:
+#   https://github.com/mesonbuild/meson/issues/707
+
+option('enable_tracing', type: 'boolean', value: false)
+option('enable_profiling', type: 'boolean', value: false)
+
+option('with_editorconfig', type: 'boolean')
+option('with_webkit', type: 'boolean')
