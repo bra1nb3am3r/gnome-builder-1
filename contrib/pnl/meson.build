@@ -64,7 +64,7 @@ libpnl_deps = [
   dependency('gtk+-3.0'),
 ]
 
-libpnl = shared_library('pnl', libpnl_sources,
+libpnl = shared_library('panel-gtk', libpnl_sources,
   dependencies: libpnl_deps,
   c_args: ['-DPNL_COMPILATION'],
   install: true,

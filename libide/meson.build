@@ -543,7 +543,9 @@ if get_option('with_editorconfig')
   ]
 endif
 
-libide = shared_library('ide', libide_sources,
+libide_api_version = '1.0'
+
+libide = shared_library('ide-' + libide_api_version, libide_sources,
   dependencies: libide_deps,
   include_directories: include_directories(libide_includes),
   link_with: libide_libs,
@@ -556,12 +558,11 @@ if get_option('with_introspection')
 
 gnome.generate_gir(libide,
   sources: libide_public_headers + libide_public_sources,
-  nsversion: '1.0',
+  nsversion: libide_api_version,
   namespace: 'Ide',
   symbol_prefix: 'ide',
   identifier_prefix: 'Ide',
   includes: ['Gio-2.0', 'Gtk-3.0', 'GtkSource-3.0', 'Peas-1.0', libtmpl_gir[0]],
-  export_packages: 'ide-1.0',
   install: true,
   install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
   install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',

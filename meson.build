@@ -43,6 +43,11 @@ pkglibdir = get_option('libdir') + '/gnome-builder'
 pkggirdir = get_option('datadir') + '/gnome-builder/gir-1.0'
 gnome = import('gnome')
 
+subdir('data')
+subdir('data/fonts')
+subdir('data/gsettings')
+subdir('data/icons')
+subdir('data/style-schemes')
 subdir('contrib/egg')
 subdir('contrib/gd')
 subdir('contrib/gstyle')

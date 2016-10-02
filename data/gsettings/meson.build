@@ -1,0 +1,12 @@
+install_data([
+  'org.gnome.builder.build.gschema.xml',
+  'org.gnome.builder.code-insight.gschema.xml',
+  'org.gnome.builder.editor.gschema.xml',
+  'org.gnome.builder.editor.language.gschema.xml',
+  'org.gnome.builder.extension-type.gschema.xml',
+  'org.gnome.builder.gschema.xml',
+  'org.gnome.builder.plugin.gschema.xml',
+  'org.gnome.builder.project-tree.gschema.xml',
+  'org.gnome.builder.terminal.gschema.xml',
+  'org.gnome.builder.workbench.gschema.xml',
+], install_dir: get_option('datadir') + '/glib-2.0/schemas')

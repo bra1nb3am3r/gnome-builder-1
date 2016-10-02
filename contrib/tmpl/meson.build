@@ -88,7 +88,9 @@ libtmpl_sources = libtmpl_sources + [
   pgen.process('tmpl-expr-parser.y'),
 ]
 
-libtmpl = shared_library('tmpl', libtmpl_sources,
+libtmpl_api_version = '1.0'
+
+libtmpl = shared_library('template-glib-' + libtmpl_api_version, libtmpl_sources,
   dependencies: libtmpl_deps,
   c_args: ['-DTMPL_GLIB_COMPILATION'],
   install: true,
@@ -117,7 +119,7 @@ libtmpl_introspection_sources = [
 
 libtmpl_gir = gnome.generate_gir(libtmpl,
   sources: libtmpl_introspection_sources,
-  nsversion: '1.0',
+  nsversion: libtmpl_api_version,
   namespace: 'Template',
   symbol_prefix: 'tmpl',
   identifier_prefix: 'Tmpl',
