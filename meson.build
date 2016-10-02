@@ -54,6 +54,7 @@ subdir('contrib/search')
 subdir('contrib/tmpl')
 subdir('contrib/xml')
 subdir('libide')
+subdir('po')
 
 executable('gnome-builder', 'src/main.c',
   gui_app: true,

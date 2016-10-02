@@ -80,7 +80,7 @@ libegg_deps = [
   dependency('gio-2.0'),
 ]
 
-libegg = shared_library('libegg', libegg_sources,
+libegg = shared_library('egg', libegg_sources,
   dependencies: libegg_deps,
   install: true,
   install_dir: get_option('libdir') + '/gnome-builder',

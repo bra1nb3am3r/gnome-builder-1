@@ -1,0 +1,41 @@
+i18n = import('i18n')
+
+langs = [
+  'bs',
+  'ca',
+  'cs',
+  'da',
+  'de',
+  'el',
+  'en_GB',
+  'eo',
+  'es',
+  'fr',
+  'gl',
+  'he',
+  'hu',
+  'id',
+  'it',
+  'kk',
+  'ko',
+  'lt',
+  'lv',
+  'nb',
+  'nl',
+  'oc',
+  'pl',
+  'pt',
+  'pt_BR',
+  'sk',
+  'sl',
+  'sr',
+  'sr@latin',
+  'sv',
+  'tr',
+  'uk',
+  'zh_TW',
+]
+
+i18n.gettext('gnome-builder',
+  languages: langs
+)
