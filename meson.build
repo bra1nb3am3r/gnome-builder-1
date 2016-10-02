@@ -1,6 +1,7 @@
 project('gnome-builder', 'c',
   license: 'GPL3+',
   version: '3.22.0',
+  meson_version: '>=0.35.0',
   # https://github.com/mesonbuild/meson/pull/834
   default_options: ['b_lundef=false'],
 )
@@ -39,6 +40,7 @@ configure_file(
 )
 
 pkglibdir = get_option('libdir') + '/gnome-builder'
+pkggirdir = get_option('datadir') + '/gnome-builder/gir-1.0'
 gnome = import('gnome')
 
 subdir('contrib/egg')

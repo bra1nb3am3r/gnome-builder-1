@@ -33,11 +33,10 @@ libegg_headers = [
 ]
 
 install_headers(libegg_headers,
-  subdir: 'gnome-builder' + meson.project_version() + '/egg'
+  subdir: 'gnome-builder-' + meson.project_version() + '/egg'
 )
 
 libegg_resources = gnome.compile_resources('egg-resources', 'egg.gresource.xml',
-  source_dir: meson.current_source_dir(),
   c_name: 'egg',
 )
 
@@ -72,7 +71,8 @@ libegg_sources = [
   'egg-task-cache.c',
   'egg-three-grid.c',
   'egg-widget-action-group.c',
-  libegg_resources,
+  libegg_resources[0],
+  libegg_resources[1]
 ]
 
 libegg_deps = [
@@ -85,3 +85,19 @@ libegg = shared_library('libegg', libegg_sources,
   install: true,
   install_dir: get_option('libdir') + '/gnome-builder',
 )
+
+if get_option('with_introspection')
+
+gnome.generate_gir(libegg,
+  sources: libegg_sources + libegg_headers,
+  nsversion: '1.0',
+  namespace: 'Egg',
+  symbol_prefix: 'egg',
+  identifier_prefix: 'Egg',
+  includes: ['Gtk-3.0'],
+  install: true,
+  install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
+  install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
+)
+
+endif

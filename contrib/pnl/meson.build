@@ -26,7 +26,6 @@ install_headers(libpnl_headers,
 
 libpnl_resources = gnome.compile_resources('pnl-resources',
   'pnl.gresource.xml',
-  source_dir: meson.current_source_dir(),
   c_name: 'pnl',
 )
 
@@ -57,7 +56,8 @@ libpnl_sources = [
   'pnl-tab.c',
   'pnl-util-private.h',
   'pnl-util.c',
-  libpnl_resources,
+  libpnl_resources[0],
+  libpnl_resources[1],
 ]
 
 libpnl_deps = [
@@ -70,3 +70,22 @@ libpnl = shared_library('pnl', libpnl_sources,
   install: true,
   install_dir: get_option('libdir') + '/gnome-builder',
 )
+
+if get_option('with_introspection')
+
+gnome.generate_gir(libpnl,
+  sources: libpnl_sources + libpnl_headers,
+  nsversion: '1.0',
+  namespace: 'Pnl',
+  symbol_prefix: 'pnl',
+  identifier_prefix: 'Pnl',
+  includes: ['Gtk-3.0'],
+  install: true,
+  install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
+  install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
+  extra_args: [
+    '-DPNL_COMPILATION',
+  ],
+)
+
+endif

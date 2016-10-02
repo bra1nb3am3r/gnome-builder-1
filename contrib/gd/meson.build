@@ -1,6 +1,5 @@
 libgd_resources = gnome.compile_resources('gd-resources',
   'gd-tagged-entry.gresource.xml',
-  source_dir: meson.current_source_dir(),
   c_name: 'gd',
 )
 

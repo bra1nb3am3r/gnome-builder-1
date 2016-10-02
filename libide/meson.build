@@ -1,3 +1,26 @@
+libide_enum_headers = [
+  'buffers/ide-buffer.h',
+  'buildsystem/ide-build-result.h',
+  'devices/ide-device.h',
+  'diagnostics/ide-diagnostic.h',
+  'doap/ide-doap.h',
+  'files/ide-indent-style.h',
+  'highlighting/ide-highlighter.h',
+  'runtimes/ide-runtime.h',
+  'sourceview/ide-source-view.h',
+  'symbols/ide-symbol.h',
+  'threading/ide-thread-pool.h',
+  'vcs/ide-vcs-config.h',
+  'workbench/ide-layout-stack-split.h',
+]
+
+# https://github.com/mesonbuild/meson/pull/718
+libide_enums = gnome.mkenums('ide-enums',
+  h_template: 'ide-enums.h.in',
+  c_template: 'ide-enums.c.in',
+  sources: libide_enum_headers,
+)
+
 libide_public_headers = [
   'ide-context.h',
   'ide-debug.h',
@@ -162,27 +185,6 @@ libide_public_headers = [
   'workbench/ide-workbench.h',
   'workers/ide-worker.h',
 ]
-
-libide_enum_headers = [
-  'buffers/ide-buffer.h',
-  'buildsystem/ide-build-result.h',
-  'devices/ide-device.h',
-  'diagnostics/ide-diagnostic.h',
-  'doap/ide-doap.h',
-  'files/ide-indent-style.h',
-  'highlighting/ide-highlighter.h',
-  'runtimes/ide-runtime.h',
-  'sourceview/ide-source-view.h',
-  'symbols/ide-symbol.h',
-  'threading/ide-thread-pool.h',
-  'vcs/ide-vcs-config.h',
-  'workbench/ide-layout-stack-split.h',
-]
-
-# https://github.com/mesonbuild/meson/pull/718
-libide_enums = gnome.mkenums('libide-enums',
-  sources: libide_enum_headers,
-)
 
 install_headers(libide_public_headers,
   subdir: 'gnome-builder-' + meson.project_version() + '/libide'
@@ -549,3 +551,21 @@ libide = shared_library('ide', libide_sources,
   install: true,
   install_dir: get_option('libdir') + '/gnome-builder',
 )
+
+if get_option('with_introspection')
+
+gnome.generate_gir(libide,
+  sources: libide_public_headers + libide_public_sources,
+  nsversion: '1.0',
+  namespace: 'Ide',
+  symbol_prefix: 'ide',
+  identifier_prefix: 'Ide',
+  includes: ['Gio-2.0', 'Gtk-3.0', 'GtkSource-3.0', 'Peas-1.0', libtmpl_gir[0]],
+  export_packages: 'ide-1.0',
+  install: true,
+  install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
+  install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
+
+)
+
+endif
