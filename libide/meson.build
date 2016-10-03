@@ -14,17 +14,20 @@ libide_enum_headers = [
   'workbench/ide-layout-stack-split.h',
 ]
 
+libide_header_subdir = 'gnome-builder-' + meson.project_version() + '/libide'
+libide_header_dir = get_option('includedir') + '/' + libide_header_subdir
+
 # https://github.com/mesonbuild/meson/pull/718
 libide_enums = gnome.mkenums('ide-enums',
   h_template: 'ide-enums.h.in',
   c_template: 'ide-enums.c.in',
   sources: libide_enum_headers,
+  install_header: true,
+  install_dir: libide_header_dir,
 )
 
 libide_public_headers = [
   'ide-context.h',
-  'ide-debug.h',
-  'ide-enums.h',
   'ide-global.h',
   'ide-macros.h',
   'ide-object.h',
@@ -186,15 +189,23 @@ libide_public_headers = [
   'workers/ide-worker.h',
 ]
 
-install_headers(libide_public_headers,
-  subdir: 'gnome-builder-' + meson.project_version() + '/libide'
+libide_conf = configuration_data()
+libide_conf.set10('ENABLE_TRACING', get_option('enable_tracing'))
+# FIXME: BUGREPORT_URL
+libide_debug_h = configure_file(
+  input: 'ide-debug.h.in',
+  output: 'ide-debug.h',
+  configuration: libide_conf,
+  install: true,
+  install_dir: libide_header_dir,
 )
 
-libide_resources = gnome.compile_resources('ide-resources',
-  'resources/libide.gresource.xml',
-  source_dir: meson.current_source_dir() + '/resources',
-  c_name: 'ide',
+
+install_headers(libide_public_headers,
+  subdir: libide_header_subdir,
 )
+
+subdir('resources')
 
 libide_icons_resources = gnome.compile_resources('ide-icons-resources',
   meson.source_root() + '/data/icons/hicolor/icons.gresource.xml',
@@ -253,7 +264,8 @@ libide_public_sources = [
   'history/ide-back-forward-list-save.c',
   'history/ide-back-forward-list.c',
   'ide-context.c',
-  'ide-enums.c',
+  libide_enums[0],
+  libide_enums[1],
   'ide-object.c',
   'ide-service.c',
   'ide.c',
@@ -361,7 +373,15 @@ libide_public_sources = [
   'workers/ide-worker.c',
 ]
 
-libide_sources = libide_public_sources + [
+libide_generated_headers = [
+  libide_resources[1],
+  libide_icons_resources[1],
+  libide_debug_h,
+]
+
+libide_sources = libide_generated_headers + libide_public_sources + [
+  libide_resources[0],
+  libide_icons_resources[0],
   'application/ide-application-actions.c',
   'application/ide-application-actions.h',
   'application/ide-application-command-line.c',
@@ -488,8 +508,6 @@ libide_sources = libide_public_sources + [
   'workers/ide-worker-manager.h',
   'workers/ide-worker-process.c',
   'workers/ide-worker-process.h',
-  libide_resources,
-  libide_icons_resources,
 ]
 
 libide_deps = [
@@ -500,27 +518,24 @@ libide_deps = [
   dependency('libpeas-1.0 >= 1.18.0'),
   dependency('libxml-2.0 >= 2.9.0'),
   dependency('pangoft2 >= 1.38.0'),
+  libegg_dep,
+  libpnl_dep,
+  libtmpl_dep,
 ]
 
 contrib_dir = meson.source_root() + '/contrib/'
 
 libide_includes = [
-  contrib_dir + 'egg',
   contrib_dir + 'gd',
   contrib_dir + 'nautilus',
-  contrib_dir + 'pnl',
   contrib_dir + 'search',
-  contrib_dir + 'tmpl',
   contrib_dir + 'xml',
 ]
 
 libide_libs = [
-  libegg,
   libgd,
   libnautilus,
-  libpnl,
   libsearch,
-  libtmpl,
   libxml,
 ]
 
@@ -554,19 +569,31 @@ libide = shared_library('ide-' + libide_api_version, libide_sources,
   install_dir: get_option('libdir') + '/gnome-builder',
 )
 
+libide_dep = declare_dependency(
+  sources: libide_generated_headers,
+  link_with: libide,
+  include_directories: include_directories([
+    meson.current_source_dir(),
+    meson.current_build_dir(),
+  ])
+)
+
 if get_option('with_introspection')
 
 gnome.generate_gir(libide,
-  sources: libide_public_headers + libide_public_sources,
+  sources: libide_generated_headers + libide_public_headers + libide_public_sources,
   nsversion: libide_api_version,
   namespace: 'Ide',
   symbol_prefix: 'ide',
   identifier_prefix: 'Ide',
+  #dependencies: libide_dep,
   includes: ['Gio-2.0', 'Gtk-3.0', 'GtkSource-3.0', 'Peas-1.0', libtmpl_gir[0]],
   install: true,
   install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
   install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
-
+  extra_args: [
+    '-I' + meson.current_build_dir(),
+  ]
 )
 
 endif

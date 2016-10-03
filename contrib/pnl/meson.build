@@ -16,12 +16,27 @@ libpnl_headers = [
   'pnl-multi-paned.h',
   'pnl-tab-strip.h',
   'pnl-tab.h',
-  'pnl-version.h',
   'pnl.h',
 ]
 
+libpnl_header_dir = get_option('includedir') + '/gnome-builder-' + meson.project_version() + '/pnl'
+
+libpnl_conf = configuration_data()
+libpnl_conf.set('MAJOR_VERSION', MAJOR_VERSION)
+libpnl_conf.set('MINOR_VERSION', MINOR_VERSION)
+libpnl_conf.set('MICRO_VERSION', MICRO_VERSION)
+libpnl_conf.set_quoted('VERSION', meson.project_version())
+
+libpnl_version_h = configure_file(
+  input: 'pnl-version.h.in',
+  output: 'pnl-version.h',
+  configuration: libpnl_conf,
+  install: true,
+  install_dir: libpnl_header_dir,
+)
+
 install_headers(libpnl_headers,
-  subdir: 'gnome-builder-' + meson.project_version() + '/pnl',
+  install_dir: libpnl_header_dir,
 )
 
 libpnl_resources = gnome.compile_resources('pnl-resources',
@@ -58,6 +73,7 @@ libpnl_sources = [
   'pnl-util.c',
   libpnl_resources[0],
   libpnl_resources[1],
+  libpnl_version_h,
 ]
 
 libpnl_deps = [
@@ -69,6 +85,15 @@ libpnl = shared_library('panel-gtk', libpnl_sources,
   c_args: ['-DPNL_COMPILATION'],
   install: true,
   install_dir: get_option('libdir') + '/gnome-builder',
+)
+
+libpnl_dep = declare_dependency(
+  sources: libpnl_version_h,
+  link_with: libpnl,
+  include_directories: include_directories([
+    meson.current_source_dir(),
+    meson.current_build_dir(),
+  ])
 )
 
 if get_option('with_introspection')

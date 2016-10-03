@@ -86,6 +86,14 @@ libegg = shared_library('egg-private', libegg_sources,
   install_dir: get_option('libdir') + '/gnome-builder',
 )
 
+libegg_dep = declare_dependency(
+  link_with: libegg,
+  include_directories: include_directories([
+    meson.current_source_dir(),
+    meson.current_build_dir(),
+  ])
+)
+
 if get_option('with_introspection')
 
 gnome.generate_gir(libegg,

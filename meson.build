@@ -6,6 +6,10 @@ project('gnome-builder', 'c',
   default_options: ['b_lundef=false'],
 )
 
+MAJOR_VERSION = '3'
+MINOR_VERSION = '20'
+MICRO_VERSION = '0'
+
 conf = configuration_data()
 conf.set_quoted('PACKAGE_NAME', 'gnome-builder')
 conf.set_quoted('PACKAGE_VERSION', meson.project_version())
@@ -23,8 +27,8 @@ conf.set_quoted('SRCDIR', meson.source_root())
 conf.set_quoted('BUILDDIR', meson.build_root())
 
 add_global_arguments([
-  '-I' + meson.build_root(),
   '-DHAVE_CONFIG_H',
+  '-I' + meson.build_root(), # config.h
   '-D_GNU_SOURCE',
   '-fPIC', '-fPIE', # Doesn't work?
 ], language: 'c')
@@ -64,9 +68,6 @@ subdir('po')
 
 executable('gnome-builder', 'src/main.c',
   gui_app: true,
-  link_with: libide,
   install: true,
-  include_directories: include_directories([
-    'libide'] + libide_includes),
-  dependencies: libide_deps,
+  dependencies: libide_deps + [libide_dep],
 )
