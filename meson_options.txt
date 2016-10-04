@@ -7,6 +7,7 @@ option('enable_profiling', type: 'boolean', value: false)
 option('with_editorconfig', type: 'boolean')
 option('with_webkit', type: 'boolean')
 option('with_introspection', type: 'boolean')
+option('with_docs', type: 'boolean', value: false)
 
 # Plugins
 option('with_autotools', type: 'boolean')
