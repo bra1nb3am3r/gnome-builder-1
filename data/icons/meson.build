@@ -1,4 +1,4 @@
-icondir = get_option('datadir') + '/icons'
+icondir = path_join(get_option('datadir'), 'icons')
 
 # FIXME: We have unrelated files in some of these
 

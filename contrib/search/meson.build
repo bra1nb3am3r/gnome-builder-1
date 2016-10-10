@@ -9,5 +9,5 @@ libsearch_deps = [
 
 libsearch = static_library('search', libsearch_sources,
   dependencies: libsearch_deps,
-  c_args: ['-fPIC'],
+  pic: true,
 )

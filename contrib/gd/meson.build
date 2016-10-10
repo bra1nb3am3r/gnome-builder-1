@@ -15,5 +15,5 @@ libgd_deps = [
 
 libgd = static_library('gd', libgd_sources,
   dependencies: libgd_deps,
-  c_args: ['-fPIC'],
+  pic: true,
 )

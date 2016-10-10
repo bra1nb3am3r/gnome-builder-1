@@ -1,4 +1,4 @@
-plugindir = get_option('libdir') + '/gnome-builder/plugins'
+plugindir = path_join(get_option('libdir'), 'gnome-builder/plugins')
 
 subdir('autotools')
 #subdir('autotools-templates')

@@ -9,5 +9,5 @@ libxml_deps = [
 
 libxml = static_library('xml', libxml_sources,
   dependencies: libxml_deps,
-  c_args: ['-fPIC'],
+  pic: true,
 )

@@ -9,5 +9,5 @@ libnautilus_deps = [
 
 libnautilus = static_library('nautilus', libnautilus_sources,
   dependencies: libnautilus_deps,
-  c_args: ['-fPIC'],
+  pic: true,
 )

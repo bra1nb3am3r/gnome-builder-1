@@ -15,7 +15,7 @@ libide_enum_headers = [
 ]
 
 libide_header_subdir = 'gnome-builder-' + meson.project_version() + '/libide'
-libide_header_dir = get_option('includedir') + '/' + libide_header_subdir
+libide_header_dir = path_join(get_option('includedir'), libide_header_subdir)
 
 # https://github.com/mesonbuild/meson/pull/718
 libide_enums = gnome.mkenums('ide-enums',
@@ -208,8 +208,8 @@ install_headers(libide_public_headers,
 subdir('resources')
 
 libide_icons_resources = gnome.compile_resources('ide-icons-resources',
-  meson.source_root() + '/data/icons/hicolor/icons.gresource.xml',
-  source_dir: meson.source_root() + '/data/icons/hicolor',
+  path_join(meson.source_root(), 'data/icons/hicolor/icons.gresource.xml'),
+  source_dir: path_join(meson.source_root(), 'data/icons/hicolor'),
   c_name: 'ide_icons',
 )
 
@@ -523,7 +523,7 @@ libide_deps = [
   libtmpl_dep,
 ]
 
-contrib_dir = meson.source_root() + '/contrib/'
+contrib_dir = path_join(meson.source_root(), 'contrib/')
 
 libide_includes = [
   contrib_dir + 'gd',
@@ -566,7 +566,7 @@ libide = shared_library('ide-' + libide_api_version, libide_sources,
   link_with: libide_libs,
   c_args: libide_args,
   install: true,
-  install_dir: get_option('libdir') + '/gnome-builder',
+  install_dir: pkglibdir,
 )
 
 libide_dep = declare_dependency(
@@ -589,8 +589,8 @@ gnome.generate_gir(libide,
   #dependencies: libide_dep,
   includes: ['Gio-2.0', 'Gtk-3.0', 'GtkSource-3.0', 'Peas-1.0', libtmpl_gir[0]],
   install: true,
-  install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
-  install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
+  install_dir_gir: pkggirdir,
+  install_dir_typelib: pkgtypelibdir,
   extra_args: [
     '-I' + meson.current_build_dir(),
   ]

@@ -1,4 +1,4 @@
-schema_dir = get_option('datadir') + '/glib-2.0/schemas'
+schema_dir = path_join(get_option('datadir'), 'glib-2.0', 'schemas')
 
 # Perhaps this should be moved to the plugin
 ctags_path = 'ctags'

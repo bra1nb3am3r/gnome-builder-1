@@ -32,12 +32,12 @@ libeditorconfig_args = [
 	'-Deditorconfig_VERSION_MINOR=0',
 	'-Deditorconfig_VERSION_PATCH=0',
 	'-Deditorconfig_VERSION_SUFFIX=0',
-	'-fPIC',
 ]
 
 libeditorconfig = static_library('editorconfig',
   libeditorconfig_sources,
   dependencies: libeditorconfig_deps,
   c_args: libeditorconfig_args,
+  pic: true,
 )
 endif

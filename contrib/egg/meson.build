@@ -83,7 +83,7 @@ libegg_deps = [
 libegg = shared_library('egg-private', libegg_sources,
   dependencies: libegg_deps,
   install: true,
-  install_dir: get_option('libdir') + '/gnome-builder',
+  install_dir: pkglibdir,
 )
 
 libegg_dep = declare_dependency(
@@ -96,7 +96,7 @@ libegg_dep = declare_dependency(
 
 if get_option('with_introspection')
 
-gnome.generate_gir(libegg,
+libegg_gir = gnome.generate_gir(libegg,
   sources: libegg_sources + libegg_headers,
   nsversion: '1.0',
   namespace: 'Egg',
@@ -104,8 +104,16 @@ gnome.generate_gir(libegg,
   identifier_prefix: 'Egg',
   includes: ['Gtk-3.0'],
   install: true,
-  install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
-  install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
+  install_dir_gir: pkggirdir,
+  install_dir_typelib: pkgtypelibdir,
+  extra_args: [
+    '--c-include=egg-private.h',
+  ]
 )
+
+#gnome.generate_vapi('egg-private',
+#  sources: libegg_gir[0],
+#  packages: ['gio-2.0', 'gtk+-3.0'],
+#)
 
 endif

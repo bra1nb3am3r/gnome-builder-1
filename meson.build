@@ -1,7 +1,7 @@
 project('gnome-builder', 'c',
   license: 'GPL3+',
   version: '3.22.0',
-  meson_version: '>=0.35.0',
+  meson_version: '>=0.36.0',
   # https://github.com/mesonbuild/meson/pull/834
   default_options: ['b_lundef=false'],
 )
@@ -16,7 +16,7 @@ conf.set_quoted('PACKAGE_VERSION', meson.project_version())
 conf.set_quoted('PACKAGE_STRING', 'gnome-builder-' + meson.project_version())
 conf.set_quoted('PACKAGE_DATADIR', get_option('datadir'))
 conf.set_quoted('PACKAGE_LIBDIR', get_option('datadir'))
-conf.set_quoted('PACKAGE_LOCALE_DIR', get_option('datadir') + '/locale')
+conf.set_quoted('PACKAGE_LOCALE_DIR', path_join(get_option('datadir'), 'locale'))
 conf.set_quoted('PACKAGE_LIBEXECDIR', get_option('libexecdir'))
 
 conf.set('GETTEXT_PACKAGE', 'PACKAGE_NAME')
@@ -43,8 +43,9 @@ configure_file(
   configuration: conf
 )
 
-pkglibdir = get_option('libdir') + '/gnome-builder'
-pkggirdir = get_option('datadir') + '/gnome-builder/gir-1.0'
+pkglibdir = path_join(get_option('libdir'), 'gnome-builder')
+pkggirdir = path_join(get_option('datadir'),' gnome-builder', 'gir-1.0')
+pkgtypelibdir = path_join(get_option('datadir'), 'gnome-builder', 'girepository-1.0')
 gnome = import('gnome')
 
 subdir('data')

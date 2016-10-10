@@ -4,7 +4,7 @@ libtmpl_enum_headers = [
 ]
 
 libtmpl_headers_subdir = 'gnome-builder-' + meson.project_version() + '/template-glib'
-libtmpl_headers_dir = get_option('includedir') + '/' + libtmpl_headers_subdir
+libtmpl_headers_dir = path_join(get_option('includedir'), libtmpl_headers_subdir)
 
 libtmpl_enums = gnome.mkenums('tmpl-enums',
   h_template: 'tmpl-enums.h.in',
@@ -112,7 +112,7 @@ libtmpl = shared_library('template-glib-' + libtmpl_api_version, libtmpl_sources
   dependencies: libtmpl_deps,
   c_args: ['-DTMPL_GLIB_COMPILATION'],
   install: true,
-  install_dir: pkglibdir, # Was this the wrong dir?
+  install_dir: pkglibdir,
 )
 
 libtmpl_dep = declare_dependency(
@@ -152,11 +152,16 @@ libtmpl_gir = gnome.generate_gir(libtmpl,
   identifier_prefix: 'Tmpl',
   includes: ['Gio-2.0'],
   install: true,
-  install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
-  install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
+  install_dir_gir: pkggirdir,
+  install_dir_typelib: pkgtypelibdir,
   extra_args: [
     '-DTMPL_GLIB_COMPILATION',
   ]
 )
+
+#gnome.generate_vapi('template-glib-' + libtmpl_api_version,
+#  sources: [libtmpl_gir[0], 'Template-1.0.metadata'],
+#  packages: 'gio-2.0',
+#)
 
 endif

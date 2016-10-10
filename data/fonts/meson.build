@@ -1,3 +1,3 @@
 install_data([
   'BuilderBlocks.ttf',
-], install_dir: get_option('datadir') + '/gnome-builder/fonts')
+], install_dir: path_join(get_option('datadir'), 'gnome-builder/fonts'))
