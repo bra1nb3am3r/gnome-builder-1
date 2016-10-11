@@ -11,3 +11,10 @@ libnautilus = static_library('nautilus', libnautilus_sources,
   dependencies: libnautilus_deps,
   pic: true,
 )
+
+libnautilus_dep = declare_dependency(
+  link_with: libnautilus,
+  include_directories: include_directories([
+    meson.current_source_dir(),
+  ]),
+)

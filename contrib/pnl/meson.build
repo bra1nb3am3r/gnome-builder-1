@@ -84,7 +84,7 @@ libpnl = shared_library('panel-gtk', libpnl_sources,
   dependencies: libpnl_deps,
   c_args: ['-DPNL_COMPILATION'],
   install: true,
-  install_dir: get_option('libdir') + '/gnome-builder',
+  install_dir: pkglibdir,
 )
 
 libpnl_dep = declare_dependency(
@@ -106,8 +106,8 @@ gnome.generate_gir(libpnl,
   identifier_prefix: 'Pnl',
   includes: ['Gtk-3.0'],
   install: true,
-  install_dir_gir: get_option('datadir') + '/gnome-builder/gir-1.0',
-  install_dir_typelib: get_option('datadir') + '/gnome-builder/girepository-1.0',
+  install_dir_gir: pkggirdir,
+  install_dir_typelib: pkgtypelibdir,
   extra_args: [
     '-DPNL_COMPILATION',
   ],

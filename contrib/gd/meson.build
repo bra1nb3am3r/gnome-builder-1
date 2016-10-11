@@ -17,3 +17,10 @@ libgd = static_library('gd', libgd_sources,
   dependencies: libgd_deps,
   pic: true,
 )
+
+libgd_dep = declare_dependency(
+  link_with: libgd,
+  include_directories: include_directories([
+    meson.current_source_dir(),
+  ]),
+)

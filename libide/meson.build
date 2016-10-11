@@ -265,7 +265,6 @@ libide_public_sources = [
   'history/ide-back-forward-list.c',
   'ide-context.c',
   libide_enums[0],
-  libide_enums[1],
   'ide-object.c',
   'ide-service.c',
   'ide.c',
@@ -376,6 +375,7 @@ libide_public_sources = [
 libide_generated_headers = [
   libide_resources[1],
   libide_icons_resources[1],
+  libide_enums[1],
   libide_debug_h,
 ]
 
@@ -571,6 +571,13 @@ libide = shared_library('ide-' + libide_api_version, libide_sources,
 
 libide_dep = declare_dependency(
   sources: libide_generated_headers,
+  dependencies: [
+    dependency('gio-2.0 >= 2.49.0'),
+    dependency('gtk+-3.0 >= 3.21.5'),
+    dependency('gtksourceview-3.0 >= 3.21.2'),
+    libpnl_dep,
+    libegg_dep,
+  ],
   link_with: libide,
   include_directories: include_directories([
     meson.current_source_dir(),

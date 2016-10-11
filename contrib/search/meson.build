@@ -11,3 +11,10 @@ libsearch = static_library('search', libsearch_sources,
   dependencies: libsearch_deps,
   pic: true,
 )
+
+libsearch_dep = declare_dependency(
+  link_with: libsearch,
+  include_directories: include_directories([
+    meson.current_source_dir(),
+  ]),
+)

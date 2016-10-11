@@ -18,18 +18,9 @@ autotools_sources = [
   'ide-makecache-target.h',
 ]
 
-autotools_deps = [
-  dependency('gio-2.0'),
-  dependency('libpeas-1.0'),
-  dependency('gtksourceview-3.0'),
-  libegg_dep,
-  libpnl_dep,
-  libide_dep,
-]
-
 shared_library('autotools-plugin', autotools_sources,
-  dependencies: autotools_deps,
-  c_args: ['-DGNU_MAKE_NAME="make"'],
+  dependencies: plugin_deps,
+  c_args: ['-DGNU_MAKE_NAME="make"'], # FIXME: Detect make bin
   install: true,
   install_dir: plugindir,
 )
