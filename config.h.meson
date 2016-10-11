@@ -1,5 +1,3 @@
-/* config.h.in.  Generated from configure.ac by autoheader.  */
-
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
 #mesondefine ENABLE_NLS
@@ -7,65 +5,11 @@
 /* GETTEXT package name */
 #mesondefine GETTEXT_PACKAGE
 
-/* Name of GNU make on this system */
-#mesondefine GNU_MAKE_NAME
-
-/* Define to 1 if you have the Mac OS X function CFLocaleCopyCurrent in the
-   CoreFoundation framework. */
-#mesondefine HAVE_CFLOCALECOPYCURRENT
-
-/* Define to 1 if you have the Mac OS X function CFPreferencesCopyAppValue in
-   the CoreFoundation framework. */
-#mesondefine HAVE_CFPREFERENCESCOPYAPPVALUE
-
-/* define if the compiler supports basic C++11 syntax */
-#mesondefine HAVE_CXX11
-
-/* Define if the GNU dcgettext() function is already present or preinstalled.
-   */
-#mesondefine HAVE_DCGETTEXT
-
-/* Define to 1 if you have the <dlfcn.h> header file. */
-#mesondefine HAVE_DLFCN_H
-
 /* Define if the GNU gettext() function is already present or preinstalled. */
 #mesondefine HAVE_GETTEXT
 
-/* Define if you have the iconv() function and it works. */
-#mesondefine HAVE_ICONV
-
-/* Define to 1 if you have the <inttypes.h> header file. */
-#mesondefine HAVE_INTTYPES_H
-
-/* Define to 1 if you have the <memory.h> header file. */
-#mesondefine HAVE_MEMORY_H
-
 /* Define to 1 if you have the `sched_getcpu' function. */
 #mesondefine HAVE_SCHED_GETCPU
-
-/* Define to 1 if you have the `shm_open' function. */
-#mesondefine HAVE_SHM_OPEN
-
-/* Define to 1 if you have the <stdint.h> header file. */
-#mesondefine HAVE_STDINT_H
-
-/* Define to 1 if you have the <stdlib.h> header file. */
-#mesondefine HAVE_STDLIB_H
-
-/* Define to 1 if you have the <strings.h> header file. */
-#mesondefine HAVE_STRINGS_H
-
-/* Define to 1 if you have the <string.h> header file. */
-#mesondefine HAVE_STRING_H
-
-/* Define to 1 if you have the <sys/stat.h> header file. */
-#mesondefine HAVE_SYS_STAT_H
-
-/* Define to 1 if you have the <sys/types.h> header file. */
-#mesondefine HAVE_SYS_TYPES_H
-
-/* Define to 1 if you have the <unistd.h> header file. */
-#mesondefine HAVE_UNISTD_H
 
 /* Name of package */
 #mesondefine PACKAGE
@@ -95,9 +39,6 @@
 #mesondefine PACKAGE_LIBEXECDIR
 
 #mesondefine PACKAGE_LOCALE_DIR
-
-/* Define to 1 if you have the ANSI C header files. */
-#mesondefine STDC_HEADERS
 
 /* Version number of package */
 #mesondefine VERSION

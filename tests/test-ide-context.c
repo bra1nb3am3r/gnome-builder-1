@@ -58,8 +58,9 @@ test_new_async (GCancellable        *cancellable,
   const gchar *builddir;
   GTask *task;
 
-  builddir = g_getenv ("G_TEST_BUILDDIR");
+  builddir = g_getenv ("G_TEST_SRCDIR");
 
+  g_print("%s\n", builddir);
   task = g_task_new (NULL, cancellable, callback, user_data);
   path = g_build_filename (builddir, "data", "project1", "configure.ac", NULL);
   project_file = g_file_new_for_path (path);

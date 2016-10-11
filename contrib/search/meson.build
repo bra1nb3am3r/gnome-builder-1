@@ -14,6 +14,7 @@ libsearch = static_library('search', libsearch_sources,
 
 libsearch_dep = declare_dependency(
   link_with: libsearch,
+  dependencies: libsearch_deps,
   include_directories: include_directories([
     meson.current_source_dir(),
   ]),

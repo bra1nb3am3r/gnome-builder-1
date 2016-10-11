@@ -88,6 +88,7 @@ libegg = shared_library('egg-private', libegg_sources,
 
 libegg_dep = declare_dependency(
   link_with: libegg,
+  dependencies: libegg_deps,
   include_directories: include_directories([
     meson.current_source_dir(),
     meson.current_build_dir(),

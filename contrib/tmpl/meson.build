@@ -83,9 +83,13 @@ libtmpl_sources = libtmpl_generated_headers + libtmpl_headers + [
   'tmpl-util.c',
 ]
 
+cc = meson.get_compiler('c')
+libm_dep = cc.find_library('m', required: false)
+
 libtmpl_deps = [
   dependency('gio-2.0'),
   dependency('gobject-introspection-1.0'),
+  libm_dep,
 ]
 
 flex = find_program('flex')

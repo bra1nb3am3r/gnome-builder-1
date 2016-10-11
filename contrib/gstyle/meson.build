@@ -83,6 +83,7 @@ libgstyle = shared_library('gstyle-private', libgstyle_sources,
 
 libgstyle_dep = declare_dependency(
   link_with: libgstyle,
+  dependencies: libgstyle_deps,
   include_directories: include_directories([
     meson.current_source_dir()
   ])
@@ -106,3 +107,5 @@ gnome.generate_gir(libgstyle,
 )
 
 endif
+
+subdir('tests')
